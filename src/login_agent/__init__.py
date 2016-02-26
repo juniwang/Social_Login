@@ -19,12 +19,12 @@ def init_app():
     """Initialize the application.
 
     Works including :
-        - setting up hackathon factory,
         - register restful API routes
-        - initialize scheduled jobs
     """
 
-    from views import init_routes
-    init_routes()
+    #from views import init_routes
+    #init_routes()
 
 init_app()
+
+from views import *

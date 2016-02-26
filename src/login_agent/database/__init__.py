@@ -14,7 +14,7 @@ from db_adapters import SQLAlchemyAdapter
 from login_agent.util import safe_get_config
 
 MYSQL_CONNECTION = 'mysql.connection'
-DEFAULT_CONNECTION_URL = 'mysql://root:root@localhost/login_agent'
+DEFAULT_CONNECTION_URL = 'mysql://login_agent:login_agent@localhost/login_agent'
 
 engine = create_engine(safe_get_config(MYSQL_CONNECTION, DEFAULT_CONNECTION_URL),
                        convert_unicode=True,
@@ -29,3 +29,9 @@ Base.query = db_session.query_property(BaseQuery)
 db_adapter = SQLAlchemyAdapter(db_session)
 
 from models import *
+
+def init_db():
+    # import all modules here that might define models so that
+    # they will be registered properly on the metadata.  Otherwise
+    # you will have to import them first before calling init_db()
+    Base.metadata.create_all(bind=engine)

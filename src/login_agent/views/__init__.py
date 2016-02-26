@@ -26,8 +26,60 @@ import sys
 
 sys.path.append("..")
 
-__all__ = ["init_routes"]
+from login_agent import *
+from login_agent.service.login_service import *
+from flask import Response, render_template, request, g, redirect, make_response, session, url_for, abort
+
+def render(template_name_or_list, **context):
+    log.debug("rendering template '%s'" % (template_name_or_list))
+    return render_template(template_name_or_list, **context)
+
+@app.errorhandler(401)
+def custom_401(e):
+    return render("error.html", message="401"), 401
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render('error.html', message="404"), 404
+
+@app.route("/")
+def login():
+    redirect_url = request.args.get("redirect_url", "")
+    authorized_id = request.args.get("authorized_id", "")
+    # ui_html is not provided by it but by javascript.
+
+    #provider = request.args.get("provider")
+    #prs = ["github", "qq", "gitcafe", "weibo", "live", "alauda"]
+
+    #if provider is None:
+    #    provider = safe_get_config("login.provider_enabled", prs)
+    #else:
+    #    provider = provider.split(',')
+
+    service = LoginService()
+    if service.validate_request(redirect_url, authorized_id):
+        return render("login.html")
+    return render("error.html", message="fail to validate developer.")
+
+# js config
+@app.route('/config.js')
+def js_config():
+    resp = Response(response="var CONFIG=%s" % json.dumps(get_config("javascript")),
+                    status=200,
+                    mimetype="application/javascript")
+    return resp
+
+@app.route("/qq")
+def qq_login():
+    access_token = request.args.get("code", "")
+
+    service = LoginService()
+    #if service.validate_request(redirect_url, authorized_id):
+    return render("success.html")
+    #return render("error.html", message="qq fail to validate user.")
 
 
-def init_routes():
-    print "init_route"
+
+
+
+#def init_routes():

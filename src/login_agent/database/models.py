@@ -94,7 +94,8 @@ class Developer(DBBase):
     # users like companies or developers who use our login service.
     __tablename__ = 'developer'
 
-    id = Column(Integer, primary_key=True) # 0 is the default developer.
+    id = Column(Integer, primary_key=True)
+    authorized_id = Column(String(50))
     name = Column(String(50))
     password = Column(String(100))  # encrypted password for the default admin/guest users.
 
@@ -103,6 +104,8 @@ class Developer(DBBase):
     avatar_url = Column(String(200))
     domain = Column(String(50))
     create_time = Column(TZDateTime, default=get_now())
+    redirect_url = Column(String(100))
+    html_url = Column(String(100))
 
     def __init__(self, **kwargs):
         super(Developer, self).__init__(**kwargs)
@@ -112,6 +115,40 @@ class Account(DBBase):
     __tablename__ = 'account'
 
     id = Column(Integer, primary_key=True)
-    open_id = Column(String(100))
+    open_id = Column(String(100)) # open_id is given by the identity_provider
     identity_provider = Column(String(30))
-    object_id = Column(String(50))
+    object_id = Column(String(50)) # object_id is the identity of aad
+    developer_id = Column(Integer, ForeignKey("developer.id"))
+
+    def __init__(self, **kwargs):
+        super(Account, self).__init__(**kwargs)
+
+class LocalAccount(DBBase):
+    __tablename__ = 'local_account'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50))
+    password = Column(String(100))
+    nickname = Column(String(50))
+    email = Column(String(50))
+    phone = Column(String(50))
+    address = Column(String(50))
+    nation = Column(String(20))
+
+    def __init__(self, **kwargs):
+        super(LocalAccount, self).__init__(**kwargs)
+
+
+class OauthParameter(DBBase):
+    __tablename__ = "oauth_parameter"
+
+    id = Column(Integer, primary_key=True)
+    identity_provider = Column(String(30))
+    app_id = Column(String(100))
+    app_secret = Column(String(100))
+    redirect_url = Column(String(100))
+    developer_id = Column(Integer, ForeignKey("developer.id"))
+    rule = Column(String(50))
+
+    def __init__(self, **kwargs):
+        super(OauthParameter, self).__init__(**kwargs)
