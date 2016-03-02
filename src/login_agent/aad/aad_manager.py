@@ -119,7 +119,7 @@ class AadManager:
 
 
 # below is test
-aad = AadManager()
-object_id = aad.create_account("A27", "lctestad.partner.onmschina.cn", "Test", "Test", "Test1234")
-print aad.get_account_info(object_id)
+#aad = AadManager()
+#object_id = aad.create_account("A27", "lctestad.partner.onmschina.cn", "Test", "Test", "Test1234")
+#print aad.get_account_info(object_id)
 

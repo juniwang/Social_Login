@@ -75,9 +75,30 @@ def qq_login():
 
     service = LoginService()
     #if service.validate_request(redirect_url, authorized_id):
-    return render("success.html")
+    openid = service.aad_manager.create_account("test_qq10", safe_get_config("aad.default_domain", ""), "testqq", "testqq", "1234tEST")
+
+    return render("success.html", aad_openid=openid)
     #return render("error.html", message="qq fail to validate user.")
 
+@app.route("/github")
+def github_login():
+    return render("success.html")
+
+@app.route("/live")
+def live_login():
+    return render("success.html")
+
+@app.route("/gitcafe")
+def gitcafe_login():
+    return render("success.html")
+
+@app.route("/weibo")
+def weibo_login():
+    return render("success.html")
+
+@app.route("/alauda")
+def alauda_login():
+    return render("success.html")
 
 
 
