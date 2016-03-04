@@ -7,8 +7,8 @@ import time
 
 sys.path.append("..")
 
-from login_agent.util import *
-from login_agent.log import *
+from social_login.util import *
+from social_login.log import *
 
 # Azure active directory (AAD)
 class AadManager:
@@ -47,7 +47,7 @@ class AadManager:
             log.error(e)
             return json.loads("{}")
 
-    def create_account(self, principal_name, domain, display_name, mail_nickname, password):
+    def create_account(self, principal_name, display_name, mail_nickname, password):
         # principal_name is not allow to be same for different accounts.
         # display_name and mail_nickname is necessary as parameters in the AAD graph api.
         if not self.__check_access_token():
@@ -60,7 +60,7 @@ class AadManager:
                     "password": password,
                     "forceChangePasswordNextLogin": "false"
                 },
-                "userPrincipalName": principal_name + "@" + domain}
+                "userPrincipalName": principal_name}
 
         return self.__create_account_request(data)
 

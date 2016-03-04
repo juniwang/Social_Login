@@ -24,6 +24,6 @@
 # THE SOFTWARE.
 # -----------------------------------------------------------------------------------
 
-class ValidateDeveloper:
-    DISABLE = "disable"
-    ABLE = "able"
+class IdentityProvider:
+    QQ = "qq"
+    WEIBO = "weibo"

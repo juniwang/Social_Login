@@ -26,8 +26,8 @@ import sys
 
 sys.path.append("..")
 
-from login_agent import *
-from login_agent.service.login_service import *
+from social_login import *
+from social_login.service.login_service import *
 from flask import Response, render_template, request, g, redirect, make_response, session, url_for, abort
 
 def render(template_name_or_list, **context):

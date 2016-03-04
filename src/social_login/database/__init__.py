@@ -7,14 +7,13 @@ sys.path.append("..")
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-# noinspection PyUnresolvedReferences
 from flask.ext.sqlalchemy import BaseQuery
 
 from db_adapters import SQLAlchemyAdapter
-from login_agent.util import safe_get_config
+from social_login.util import safe_get_config
 
 MYSQL_CONNECTION = 'mysql.connection'
-DEFAULT_CONNECTION_URL = 'mysql://login_agent:login_agent@localhost/login_agent'
+DEFAULT_CONNECTION_URL = 'mysql://social_login:social_login@localhost/social_login'
 
 engine = create_engine(safe_get_config(MYSQL_CONNECTION, DEFAULT_CONNECTION_URL),
                        convert_unicode=True,

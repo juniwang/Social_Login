@@ -4,6 +4,6 @@ import sys
 
 sys.path.append("..")
 
-from login_agent.database import init_db
+from social_login.database import init_db
 
 init_db()

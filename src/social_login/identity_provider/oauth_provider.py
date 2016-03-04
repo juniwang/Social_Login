@@ -4,7 +4,7 @@ import sys
 
 sys.path.append("..")
 
-from login_agent import *
+from social_login import *
 
 class OauthProvider():
 

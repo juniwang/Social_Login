@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 MYSQL_HOST = "localhost"
-MYSQL_USER = "login_agent"
-MYSQL_PWD = "login_agent"
-MYSQL_DB = "login_agent"
+MYSQL_USER = "social_login"
+MYSQL_PWD = "social_login"
+MYSQL_DB = "social_login"
 MYSQL_PORT = 3306
 
 # NOTE: all following key/secrets for test purpose.
@@ -36,18 +36,23 @@ ALAUDA_CLIENT_ID = "4VR9kzNZVyWcnk9OnAwMuSus7xOOcozJIpic6W6y"
 ALAUDA_CLIENT_SECRET = "E5PUL5h9feLlEirec5HQhjIzYecv7vVbEBjWLBkRMoCoFXdvS1PzNmd4AAeNgu4M2AJ87uGnnJaoDLCcDuVxkBoHRWCn6LmfB4SKK1Dty1SkGukkTcZPEk9wpHLSiRQ3"
 
 Config = {
-	"validate_developer" : "disable",
     "mysql": {
         "connection": 'mysql://%s:%s@%s:%s/%s' % (MYSQL_USER, MYSQL_PWD, MYSQL_HOST, MYSQL_PORT, MYSQL_DB)
     },
     "aad": {
         "default_domain": "lctestad.partner.onmschina.cn",
+        "default_password": "1qazXSW@",
         "token_url": "https://login.chinacloudapi.cn/6c5489bb-5bbc-4f81-bbbf-6c6e1f8c92ca/oauth2/token",
         "api_url": "https://graph.chinacloudapi.cn/6c5489bb-5bbc-4f81-bbbf-6c6e1f8c92ca",
         "api_version": "1.6",
         "client_id": "78cc7283-0254-47c4-aa07-ef924b1903b9",
         "client_secret": "OdTeIud/CYGYfvREvN6cd0LDwAHUWofAwDCUSuP2Bhc="
     },
+    "adal": {
+        "refresh_token_url": "https://login.windows.net/lcaad.onmicrosoft.com",
+        "access_token_url": "https://login.windows.net/e3de7a8d-0bd0-4287-90ee-aee57674cb55"
+    }
+    ,
     "identity_provider": {
         "github": {
             "user_info_url": 'https://api.github.com/user?access_token=',
