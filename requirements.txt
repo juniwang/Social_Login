@@ -1,0 +1,8 @@
+adal == 0.1.0
+Flask == 0.10.1
+Flask_Login == 0.2.11
+Flask_RESTful == 0.2.12
+pytz == 2015.7
+requests == 2.8.1
+SQLAlchemy == 1.0.8
+python_dateutil == 2.5.0
