@@ -7,8 +7,8 @@ $(function(){
 
     var redirect_url = $.cookie('redirect_url') +
                        "?identity_provider=" + $.cookie('identity_provider') +
-                       "&social_token=" + $("#social_token").attr('content') +
-                       "&aad_token=" + $("#aad_token").attr('content');
+                       "&social_access_token=" + $("#social_access_token").attr('content') +
+                       "&aad_access_token=" + $("#aad_access_token").attr('content');
                        //+ "$=&code=" + getUrlParam('code')
 
     //alert($("#aad_openid").attr('content'));

@@ -12,4 +12,5 @@ create database social_login;
 create User 'social_login'@'localhost' IDENTIFIED by 'social_login';
 GRANT ALL on social_login.* TO 'social_login'@'localhost';
 """
+
 init_db()

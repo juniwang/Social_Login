@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import urllib2
 import urllib
 import time
 
@@ -10,7 +9,7 @@ sys.path.append("..")
 from social_login.util import *
 from social_login.log import *
 
-# Azure active directory (AAD)
+# Manage Azure active directory (AAD)
 class AadManager:
     token_url = safe_get_config("aad.token_url", "")
     api_url = safe_get_config("aad.api_url", "")
@@ -25,13 +24,16 @@ class AadManager:
         self.__get_access_token()
 
     def get_account_info(self, object_id):
-        # object_id is the identity of an account.
+        """ Get AAD account information by its object_id
+        """
         if not self.__check_access_token():
             return json.loads("{}")
 
         return self.__get_account_request(object_id)
 
     def __get_account_request(self, object_id):
+        """ Generate request to access AAD graph api to get account information.
+        """
         request_url = self.api_url + "/users/" + object_id + "?api-version=" + self.api_version
         try:
             req = urllib2.Request(request_url)
@@ -48,6 +50,8 @@ class AadManager:
             return json.loads("{}")
 
     def create_account(self, principal_name, display_name, mail_nickname, password):
+        """ Create a new account in the AAD domain.
+        """
         # principal_name is not allow to be same for different accounts.
         # display_name and mail_nickname is necessary as parameters in the AAD graph api.
         if not self.__check_access_token():
@@ -115,11 +119,3 @@ class AadManager:
         except Exception as e:
             log.error(e)
             return False
-
-
-
-# below is test
-#aad = AadManager()
-#object_id = aad.create_account("Uu134@lcaad.onmicrosoft.com", "qq111", "qq111", "1qazXSW@")
-#print aad.get_account_info(object_id)
-

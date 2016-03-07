@@ -24,9 +24,6 @@
 # THE SOFTWARE.
 # -----------------------------------------------------------------------------------
 
-class IDENTITY_PROVIDER:
-    QQ = "qq"
-    WEIBO = "weibo"
 
 class LOGIN_PROVIDER:
     MYSQL = "mysql"

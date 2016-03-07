@@ -17,10 +17,10 @@ class LoginService():
         log.debug("login_service initializes successful!")
 
     def qq_login(self, open_id):
-        self.get_aad_access_token(IDENTITY_PROVIDER.QQ, open_id)
+        self.get_aad_access_token(LOGIN_PROVIDER.QQ, open_id)
 
     def weibo_login(self, user_id):
-        self.get_aad_access_token(IDENTITY_PROVIDER.WEIBO, user_id)
+        self.get_aad_access_token(LOGIN_PROVIDER.WEIBO, user_id)
 
     def get_aad_access_token(self, provider_name, open_id):
         # return str or None
@@ -96,12 +96,3 @@ class LoginService():
         if not hasattr(self, "password"):
             self.password = safe_get_config("aad.default_password", "")
         return self.password
-
-
-#test
-#token_response = adal.acquire_token_with_username_password(
-#		'https://login.windows.net/lcaad.onmicrosoft.com',
-#                'qq1112234335@lcaad.onmicrosoft.com',
-#                '1qazXSW@')
-
-#print token_response
