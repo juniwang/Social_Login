@@ -24,6 +24,15 @@
 # THE SOFTWARE.
 # -----------------------------------------------------------------------------------
 
-class IdentityProvider:
+class IDENTITY_PROVIDER:
     QQ = "qq"
     WEIBO = "weibo"
+
+class LOGIN_PROVIDER:
+    MYSQL = "mysql"
+    GITHUB = "github"
+    QQ = "qq"
+    GITCAFE = "gitcafe"
+    WEIBO = "weibo"
+    LIVE = "live"
+    ALAUDA = "alauda"

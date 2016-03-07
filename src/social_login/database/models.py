@@ -100,7 +100,7 @@ class Account(DBBase):
     aad_principal_name = Column(String(100))
     aad_password = Column(String(100))
     aad_display_name = Column(String(100))
-    add_mail_nickname = Column(String(100))
+    aad_mail_nickname = Column(String(100))
 
     def __init__(self, **kwargs):
         super(Account, self).__init__(**kwargs)

@@ -104,7 +104,7 @@ class AadManager:
             log.error("fail to get AAD access_token: " + response_json.get("error", ""))
             return False
         except Exception as e:
-            log.error("fail to get AAD access_token: " + e)
+            log.error("fail to get AAD access_token")
             return False
 
     def __check_access_token(self):
@@ -120,6 +120,6 @@ class AadManager:
 
 # below is test
 #aad = AadManager()
-#object_id = aad.create_account("A27", "lctestad.partner.onmschina.cn", "Test", "Test", "Test1234")
+#object_id = aad.create_account("Uu134@lcaad.onmicrosoft.com", "qq111", "qq111", "1qazXSW@")
 #print aad.get_account_info(object_id)
 

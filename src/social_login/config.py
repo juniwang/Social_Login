@@ -11,7 +11,6 @@ MYSQL_PORT = 3306
 HOSTNAME = "http://open-hackathon-dev.chinacloudapp.cn"
 
 QQ_OAUTH_STATE = "openhackathon"  # todo state should be constant. Actually it should be unguessable to prevent CSFA
-HACKATHON_API_ENDPOINT = "http://localhost:15000"
 
 # github key for `localhost`
 GITHUB_CLIENT_ID = "b44f3d47bdeb26b9c4e6"
@@ -40,13 +39,13 @@ Config = {
         "connection": 'mysql://%s:%s@%s:%s/%s' % (MYSQL_USER, MYSQL_PWD, MYSQL_HOST, MYSQL_PORT, MYSQL_DB)
     },
     "aad": {
-        "default_domain": "lctestad.partner.onmschina.cn",
+        "default_domain": "lcaad.onmicrosoft.com",
         "default_password": "1qazXSW@",
-        "token_url": "https://login.chinacloudapi.cn/6c5489bb-5bbc-4f81-bbbf-6c6e1f8c92ca/oauth2/token",
-        "api_url": "https://graph.chinacloudapi.cn/6c5489bb-5bbc-4f81-bbbf-6c6e1f8c92ca",
+        "token_url": "https://login.microsoftonline.com/e3de7a8d-0bd0-4287-90ee-aee57674cb55/oauth2/token",
+        "api_url": "https://graph.windows.net/e3de7a8d-0bd0-4287-90ee-aee57674cb55",
         "api_version": "1.6",
-        "client_id": "78cc7283-0254-47c4-aa07-ef924b1903b9",
-        "client_secret": "OdTeIud/CYGYfvREvN6cd0LDwAHUWofAwDCUSuP2Bhc="
+        "client_id": "67d49d77-1cba-47fe-8703-7305c5869f35",
+        "client_secret": "ybk03DgOUaEJqLRjXgfqgBqFFlevbNT/04t2Lik9528="
     },
     "adal": {
         "refresh_token_url": "https://login.windows.net/lcaad.onmicrosoft.com",
@@ -98,5 +97,55 @@ Config = {
             "authorize_url": "http://console.int.alauda.io/oauth/authorize?response_type=code&client_id=%s&state=state&redirect_uri=%s/alauda" % (
                 ALAUDA_CLIENT_ID, HOSTNAME)
         }
+    },
+    "login": {
+        "github": {
+            "client_id": GITHUB_CLIENT_ID,
+            "access_token_url": 'https://github.com/login/oauth/access_token?client_id=%s&client_secret=%s&redirect_uri=%s/github&code=' % (
+                GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, HOSTNAME),
+            "user_info_url": 'https://api.github.com/user?access_token=',
+            "emails_info_url": 'https://api.github.com/user/emails?access_token='
+        },
+        "qq": {
+            "client_id": QQ_CLIENT_ID,
+            "meta_content": QQ_META_CONTENT,
+            "access_token_url": 'https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=%s&client_secret=%s&redirect_uri=%s/qq&code=' % (
+                QQ_CLIENT_ID, QQ_CLIENT_SECRET, HOSTNAME),
+            "openid_url": 'https://graph.qq.com/oauth2.0/me?access_token=',
+            "user_info_url": 'https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s'
+        },
+        "gitcafe": {
+            "client_id": GITCAFE_CLIENT_ID,
+            "access_token_url": 'https://gcas.dgz.sh/oauth/token?client_id=%s&client_secret=%s&redirect_uri=%s/gitcafe&grant_type=authorization_code&code=' % (
+                GITCAFE_CLIENT_ID, GITCAFE_CLIENT_SECRET, HOSTNAME),
+            "user_info_url": "https://gcas.dgz.sh/api/v1/user"
+        },
+        "weibo": {
+            "client_id": WEIBO_CLIENT_ID,
+            "meta_content": WEIBO_META_CONTENT,
+            "user_info_url": 'https://api.weibo.com/2/users/show.json?access_token=',
+            "email_info_url": 'https://api.weibo.com/2/account/profile/email.json?access_token=',
+            "access_token_url": 'https://api.weibo.com/oauth2/access_token?client_id=%s&client_secret=%s&grant_type=authorization_code&redirect_uri=%s/weibo&code=' % (
+                WEIBO_CLIENT_ID, WEIBO_CLIENT_SECRET, HOSTNAME)
+        },
+        "live": {
+            "client_id": LIVE_CLIENT_ID,
+            "client_secret": LIVE_CLIENT_SECRET,
+            "redirect_uri": '%s/live' % HOSTNAME,
+            "access_token_url": 'https://login.live.com/oauth20_token.srf',
+            "user_info_url": 'https://apis.live.net/v5.0/me?access_token='
+        },
+        "alauda": {
+            "client_id": ALAUDA_CLIENT_ID,
+            "client_secret": ALAUDA_CLIENT_SECRET,
+            "redirect_uri": '%s/alauda' % HOSTNAME,
+            "access_token_url": 'http://console.int.alauda.io/oauth/token'
+        },
+        "provider_enabled": ["github"],
+        "session_minutes": 60,
+        "token_expiration_minutes": 60 * 24
+    },
+    "hackathon-api": {
+        "endpoint": HOSTNAME
     }
 }

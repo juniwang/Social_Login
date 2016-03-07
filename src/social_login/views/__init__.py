@@ -26,9 +26,11 @@ import sys
 
 sys.path.append("..")
 
-from social_login import *
 from social_login.service.login_service import *
+from social_login.user.oauth_login import *
+
 from flask import Response, render_template, request, g, redirect, make_response, session, url_for, abort
+from flask_login import login_user
 
 def render(template_name_or_list, **context):
     log.debug("rendering template '%s'" % (template_name_or_list))
@@ -57,9 +59,7 @@ def login():
     #    provider = provider.split(',')
 
     service = LoginService()
-    if service.validate_request(redirect_url, authorized_id):
-        return render("login.html")
-    return render("error.html", message="fail to validate developer.")
+    return render("login.html")
 
 # js config
 @app.route('/config.js')
@@ -71,36 +71,44 @@ def js_config():
 
 @app.route("/qq")
 def qq_login():
-    access_token = request.args.get("code", "")
+    code = request.args.get("code", "")
 
     service = LoginService()
-    #if service.validate_request(redirect_url, authorized_id):
-    openid = service.aad_manager.create_account("test_qq10", safe_get_config("aad.default_domain", ""), "testqq", "testqq", "1234tEST")
+    #openid = service.aad_manager.create_account("test_qq10" + safe_get_config("aad.default_domain", ""), "testqq", "testqq", "1234tEST")
+    qq_login = QQLogin()
+    social_access_token = qq_login.get_token(code)
+    user_info = qq_login.get_info(social_access_token)
+    openid = user_info["openid"]
+    aad_token = service.get_aad_access_token(IDENTITY_PROVIDER.QQ, openid)
 
-    return render("success.html", aad_openid=openid)
+    #return render("success.html", aad_openid="111")
+    return __login(LOGIN_PROVIDER.QQ, social_access_token, aad_token)
     #return render("error.html", message="qq fail to validate user.")
 
-@app.route("/github")
-def github_login():
-    return render("success.html")
-
-@app.route("/live")
-def live_login():
-    return render("success.html")
-
-@app.route("/gitcafe")
-def gitcafe_login():
-    return render("success.html")
-
-@app.route("/weibo")
-def weibo_login():
-    return render("success.html")
-
-@app.route("/alauda")
-def alauda_login():
-    return render("success.html")
+#@app.route('/weibo')
+#def weibo_login():
+#    return __login(LOGIN_PROVIDER.WEIBO)
 
 
+#@app.route('/qq')
+#def qq_login():
+#    return __login(LOGIN_PROVIDER.QQ)
+
+def __login(provider, social_token, aad_token):
+    try:
+        log.info("login successfully:")
+
+        if session.get("return_url") is not None:
+            resp = make_response(redirect(session["return_url"]))
+            session["return_url"] = None
+        else:
+            resp = make_response(render("success.html", social_token=social_token, aad_token=aad_token))
+        return resp
+    except Exception as ex:
+        log.error(ex)
+        return __login_failed(provider)
 
 
-#def init_routes():
+def __login_failed(provider):
+    return redirect("/")
+

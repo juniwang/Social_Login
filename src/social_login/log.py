@@ -7,16 +7,6 @@ from logging import config, DEBUG, INFO
 __all__ = ["log"]
 
 class Log(object):
-    """Wrapper of Python logging module for easier usage
-
-    :Example:
-        from hackathon.log import log
-
-        log.info("message of INFO level ")
-        log.error(exception) # where exception is of type Exception or it inheritances
-
-    .. notes:: make sure directory '/var/log/open-hackathon/' exists and accessible
-    """
 
     def debug(self, debug):
         """write message into log file with DEBUG level
