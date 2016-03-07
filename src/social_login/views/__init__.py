@@ -74,25 +74,29 @@ def qq_login():
     code = request.args.get("code", "")
 
     service = LoginService()
-    #openid = service.aad_manager.create_account("test_qq10" + safe_get_config("aad.default_domain", ""), "testqq", "testqq", "1234tEST")
     qq_login = QQLogin()
+
     social_access_token = qq_login.get_token(code)
     user_info = qq_login.get_info(social_access_token)
     openid = user_info["openid"]
     aad_token = service.get_aad_access_token(IDENTITY_PROVIDER.QQ, openid)
 
-    #return render("success.html", aad_openid="111")
     return __login(LOGIN_PROVIDER.QQ, social_access_token, aad_token)
-    #return render("error.html", message="qq fail to validate user.")
-
-#@app.route('/weibo')
-#def weibo_login():
-#    return __login(LOGIN_PROVIDER.WEIBO)
 
 
-#@app.route('/qq')
-#def qq_login():
-#    return __login(LOGIN_PROVIDER.QQ)
+@app.route('/weibo')
+def weibo_login():
+    code = request.args.get("code", "")
+
+    service = LoginService()
+    weibo_login = WeiboLogin()
+
+    response = weibo_login.get_token(code)
+    id = response["uid"]
+    aad_token = service.get_aad_access_token(IDENTITY_PROVIDER.WEIBO, id)
+
+    return __login(LOGIN_PROVIDER.WEIBO, response["access_token"], aad_token)
+
 
 def __login(provider, social_token, aad_token):
     try:
