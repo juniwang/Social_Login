@@ -29,5 +29,5 @@ $ python run.py
 * Add *"open-hackathon-dev.chinacloudapp.cn"* as *"127.0.0.1"* in file "hosts"
 * Input *"http://open-hackathon-dev.chinacloudapp.cn/?redirect_url=http://test.com"*
 * Choose a identity provider like QQ, enter username and password.
-* And it will redirect to *"http://b.com/?identity_provider=qq&social_access_token=XXX&aad_access_token=XXX"*
+* And it will redirect to *"http://test.com/?identity_provider=qq&social_access_token=XXX&aad_access_token=XXX"*
 * Using *social_access_token* to get user resource from QQ and using *aad_access_token* to access to Microsoft Service like Office365.
